@@ -64,39 +64,41 @@ const images = [
   },
 ];
 
-const nevGallery = document.querySelector(".gallery");
+const newGallery = document.querySelector(".gallery");
 
-function createGallery(arr) {
-    return arr 
+function CreateGallery(arr) {
+  return arr
     .map(({ preview, original, description }) => {
-        return `<li class="gallery-item">
-                  <a class="gallery-link" href="${original}">
-                    <img
-                      class="gallery-image"
-                      src="${preview}"
-                      data-source="${original}"
-                      alt="${description}"
-                    />
-                  </a>
-                </li>`;
+      return `<li class="gallery-item">
+        <a class="gallery-link" href=${original}>
+          <img
+            class="gallery-image"
+            src=${preview}
+            data-source=${original}
+            alt=${description}
+          />
+        </a>
+      </li>`;
     })
+    .join("");
 }
 
-function imageGallery(evt)
-{
-    evt.preventDefault();
-   if (evt.currentTarget === evt.target) {
+function ImageHandler(evt) {
+  evt.preventDefault();
+  if (evt.currentTarget === evt.target) {
     return;
-    }
-    const img = evt.target.closest("img");
-    const currentDataset = img.dataset.source;
-    const instance = basicLightbox.create(`
-         <div>
+  }
+
+  const img = evt.target.closest(".gallery-image");
+  const currentDataset = img.dataset.source;
+  const instance = basicLightbox.create(`
+    <div>
     <img class="modal-img" src=${currentDataset} alt="">
     </div>
-    `);
+  `);
+
+  instance.show();
 }
 
-newGallery.insertAdjacentHTML("beforeend", createGallery(images));
-newGallery.addEventListener("click", imageHandler);
-
+newGallery.insertAdjacentHTML("beforeend", CreateGallery(images));
+newGallery.addEventListener("click", ImageHandler);
